@@ -13,6 +13,10 @@ func main() {
 	router.GET("/animedetails", handlers.GetAnimeDetails(config.LoadEnv()))
 	router.GET("/findanime", handlers.FindAnime(config.LoadEnv()))
 
+	router.GET("/topmanga", handlers.GetTopManga(config.LoadEnv()))
+	router.GET("/mangadetails", handlers.GetMangaDetails(config.LoadEnv()))
+	router.GET("/findmanga", handlers.FindManga(config.LoadEnv()))
+
 	// router.GET("/test", GetAnimeDetailsTest(clientId))
 
 	router.Run(":8080")
