@@ -1,23 +1,23 @@
 package main
 
 import (
+	"log"
+
 	"github.com/VaraPrasad27/Anime_Manga_List/server/config"
-	"github.com/VaraPrasad27/Anime_Manga_List/server/handlers"
+	"github.com/VaraPrasad27/Anime_Manga_List/server/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
+	clientId := config.LoadEnv()
+	if clientId == "" {
+		log.Fatal("CLIENT_ID not found in env")
+	}
+
 	router := gin.Default()
 
-	router.GET("/topanimes", handlers.GetTopAnime(config.LoadEnv()))
-	router.GET("/animedetails", handlers.GetAnimeDetails(config.LoadEnv()))
-	router.GET("/findanime", handlers.FindAnime(config.LoadEnv()))
-
-	router.GET("/topmanga", handlers.GetTopManga(config.LoadEnv()))
-	router.GET("/mangadetails", handlers.GetMangaDetails(config.LoadEnv()))
-	router.GET("/findmanga", handlers.FindManga(config.LoadEnv()))
-
-	// router.GET("/test", GetAnimeDetailsTest(clientId))
+	routes.RegisterRoutes(router, clientId)
 
 	router.Run(":8080")
 
