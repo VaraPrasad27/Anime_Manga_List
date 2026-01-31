@@ -11,6 +11,7 @@ func main() {
 
 	router.GET("/topanimes", handlers.GetTopAnime(config.LoadEnv()))
 	router.GET("/animedetails", handlers.GetAnimeDetails(config.LoadEnv()))
+	router.GET("/findanime", handlers.FindAnime(config.LoadEnv()))
 
 	// router.GET("/test", GetAnimeDetailsTest(clientId))
 
