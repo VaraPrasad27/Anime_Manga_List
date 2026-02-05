@@ -1,34 +1,34 @@
 const API_BASE = "http://localhost:8080/api";
 
-export async function getTopAnime(rankingType = "all", offset = 0) {
+export async function getTop(rankingType = "all", fr = "anime", offset = 0) {
   const res = await fetch(
-    `${API_BASE}/anime/top?ranking_type=${rankingType}&offset=${offset}`,
+    `${API_BASE}/${fr}/top?ranking_type=${rankingType}&offset=${offset}`,
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch top anime data");
+    throw new Error(`Failed to fetch top ${fr} data`);
   }
 
   return res.json();
 }
 
-export async function getAnimeDetails(id: number) {
-  const res = await fetch(`${API_BASE}/anime/${id}`);
+export async function getDetails(id: number, fr = "anime") {
+  const res = await fetch(`${API_BASE}/${fr}/${id}`);
 
   if (!res.ok) {
-    throw new Error("Failed to fetch anime details data");
+    throw new Error(`Failed to fetch ${fr} details data`);
   }
 
   return res.json();
 }
 
-export async function searchAnime(query: string, offset = 0) {
+export async function search(query: string, fr = "anime", offset = 0) {
   const res = await fetch(
-    `${API_BASE}/anime/search?q=${encodeURIComponent(query)}&offset=${offset}`,
+    `${API_BASE}/${fr}/search?q=${encodeURIComponent(query)}&offset=${offset}`,
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch anime");
+    throw new Error(`Failed to fetch ${fr}`);
   }
 
   return res.json();

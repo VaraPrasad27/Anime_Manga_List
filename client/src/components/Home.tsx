@@ -9,37 +9,44 @@ import {
   Select,
   Spinner,
 } from "@chakra-ui/react";
-import { getTopAnime, searchAnime } from "../lib/api";
+import { getTop, search } from "@/lib/api";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Home = () => {
-  const [anime, setAnime] = useState<any[]>([]);
+type HomeProps = {
+  queryFor: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const Home = ({ queryFor, value, setValue }: HomeProps) => {
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [rankingType, setRankingType] = useState("all");
-  const [value, setValue] = useState("");
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   // Select
   const frameworks = createListCollection({
-    items: [
-      { label: "All time", value: "all" },
-      { label: "Airing", value: "airing" },
-      { label: "Upcoming", value: "upcoming" },
-      { label: "Movies", value: "movie" },
-    ],
+    items:
+      queryFor === "anime"
+        ? [
+            { label: "Top Anime Series", value: "all" },
+            { label: "Top Airing Anime", value: "airing" },
+            { label: "Top Upcoming Anime", value: "upcoming" },
+            { label: "Top Anime TV Series", value: "tv" },
+            { label: "Movies", value: "movie" },
+            { label: "Most Popular", value: "bypopularity" },
+          ]
+        : [
+            { label: "All", value: "all" },
+            { label: "Top Manga", value: "manga" },
+            // { label: "Top Novels", value: "novel" },
+            // { label: "Top Doujinshi", value: "doujin" },
+            { label: "Top Manhwa", value: "manhwa" },
+            { label: "Top Manhua", value: "manhua" },
+            { label: "Most Popular", value: "bypopularity" },
+          ],
   });
-
-  // Clear Input Button
-  const endElement = value ? (
-    <CloseButton
-      size="xs"
-      onClick={() => {
-        setValue("");
-        inputRef.current?.focus();
-      }}
-      me="-2"
-    />
-  ) : undefined;
 
   useEffect(() => {
     let cancelled = false;
@@ -49,16 +56,16 @@ const Home = () => {
       try {
         let data;
         if (value.trim() !== "") {
-          data = await searchAnime(value);
+          data = await search(value, queryFor);
         } else {
-          data = await getTopAnime(rankingType);
+          data = await getTop(rankingType, queryFor);
         }
 
         if (!cancelled) {
-          setAnime(data.data ?? []);
+          setData(data.data ?? []);
         }
       } catch (error) {
-        if (!cancelled) setAnime([]);
+        if (!cancelled) setData([]);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -68,15 +75,15 @@ const Home = () => {
       cancelled = true;
       clearTimeout(timeout);
     };
-  }, [rankingType, value]);
+  }, [rankingType, value, queryFor]);
 
   return (
     <>
       <div>
         <Select.Root
           collection={frameworks}
-          size="sm"
-          width="320px"
+          size="md"
+          width="200px"
           defaultValue={["all"]}
           onValueChange={(e) => {
             setRankingType(e.value[0]);
@@ -87,7 +94,7 @@ const Home = () => {
           <Select.Label>Select anime</Select.Label>
           <Select.Control>
             <Select.Trigger>
-              <Select.ValueText placeholder="Select anime" />
+              <Select.ValueText placeholder="Select type" />
             </Select.Trigger>
             <Select.IndicatorGroup>
               <Select.Indicator />
@@ -106,28 +113,25 @@ const Home = () => {
             </Select.Positioner>
           </Portal>
         </Select.Root>
-
-        <InputGroup endElement={endElement}>
-          <Input
-            ref={inputRef}
-            placeholder="Search"
-            value={value}
-            onChange={(e) => {
-              setValue(e.currentTarget.value);
-            }}
-          />
-        </InputGroup>
       </div>
       <div>
-        <h1>Top anime {rankingType}</h1>
+        <h1>
+          Top {queryFor} {rankingType}
+        </h1>
         {loading ? (
           <Spinner size={"xl"} mt={10} />
         ) : (
-          <Grid templateColumns={"repeat(4, 1fr)"} gap={3}>
-            {anime.map((item: any) => (
-              <GridItem key={item.node.id}>
-                <img src={item.node.main_picture.medium} alt="poster" />
-                <h3>{item.node.title}</h3>
+          <Grid templateColumns={"repeat(5, 1fr)"} gap={3}>
+            {data.map((item: any) => (
+              <GridItem
+                key={item.node.id}
+                cursor={"pointer"}
+                onClick={() => navigate(`/${queryFor}/${item.node.id}`)}
+              >
+                <div className="flex flex-col">
+                  <img src={item.node.main_picture.medium} alt="poster" />
+                  <h3>{item.node.title}</h3>
+                </div>
               </GridItem>
             ))}
           </Grid>
