@@ -4,11 +4,17 @@ import { useRef } from "react";
 
 type NavbarProps = {
   setQueryFor: React.Dispatch<React.SetStateAction<string>>;
+  setRankingType: React.Dispatch<React.SetStateAction<string>>;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   value: string;
 };
 
-const Navbar = ({ setQueryFor, setValue, value }: NavbarProps) => {
+const Navbar = ({
+  setQueryFor,
+  setRankingType,
+  setValue,
+  value,
+}: NavbarProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const endElement = value ? (
@@ -23,7 +29,7 @@ const Navbar = ({ setQueryFor, setValue, value }: NavbarProps) => {
   ) : undefined;
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row justify-between">
       <div>
         <span>Anime, Manga Find</span>
       </div>
@@ -37,6 +43,7 @@ const Navbar = ({ setQueryFor, setValue, value }: NavbarProps) => {
             } else if (e.value === "manga") {
               setQueryFor("manga");
             }
+            setRankingType("all");
           }}
         >
           <SegmentGroup.Indicator />
@@ -55,7 +62,7 @@ const Navbar = ({ setQueryFor, setValue, value }: NavbarProps) => {
             ref={inputRef}
             placeholder="Search"
             value={value}
-            width={"120px"}
+            width={"200px"}
             onChange={(e) => {
               setValue(e.currentTarget.value);
             }}

@@ -9,16 +9,28 @@ import MangaDetails from "./components/MangaDetails";
 const App = () => {
   const [queryFor, setQueryFor] = useState("anime");
   const [value, setValue] = useState("");
+  const [rankingType, setRankingType] = useState("all");
 
   return (
     <Stack h={"100vh"}>
-      <Navbar setQueryFor={setQueryFor} setValue={setValue} value={value} />
+      <Navbar
+        setQueryFor={setQueryFor}
+        setValue={setValue}
+        value={value}
+        setRankingType={setRankingType}
+      />
       <BrowserRouter>
         <Routes>
           <Route
             path="/"
             element={
-              <Home queryFor={queryFor} value={value} setValue={setValue} />
+              <Home
+                queryFor={queryFor}
+                value={value}
+                setValue={setValue}
+                rankingType={rankingType}
+                setRankingType={setRankingType}
+              />
             }
           />
           <Route path="/anime/:id" element={<AnimeDetails />} />

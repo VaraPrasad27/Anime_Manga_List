@@ -1,28 +1,34 @@
 import {
-  CloseButton,
   createListCollection,
   Grid,
   GridItem,
-  Input,
-  InputGroup,
   Portal,
   Select,
   Spinner,
 } from "@chakra-ui/react";
 import { getTop, search } from "@/lib/api";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 type HomeProps = {
   queryFor: string;
+
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
+
+  rankingType: string;
+  setRankingType: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const Home = ({ queryFor, value, setValue }: HomeProps) => {
+const Home = ({
+  queryFor,
+  value,
+  setValue,
+  rankingType,
+  setRankingType,
+}: HomeProps) => {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [rankingType, setRankingType] = useState("all");
   const navigate = useNavigate();
 
   // Select
@@ -91,7 +97,7 @@ const Home = ({ queryFor, value, setValue }: HomeProps) => {
           }}
         >
           <Select.HiddenSelect />
-          <Select.Label>Select anime</Select.Label>
+          <Select.Label>Type</Select.Label>
           <Select.Control>
             <Select.Trigger>
               <Select.ValueText placeholder="Select type" />
@@ -115,9 +121,6 @@ const Home = ({ queryFor, value, setValue }: HomeProps) => {
         </Select.Root>
       </div>
       <div>
-        <h1>
-          Top {queryFor} {rankingType}
-        </h1>
         {loading ? (
           <Spinner size={"xl"} mt={10} />
         ) : (
