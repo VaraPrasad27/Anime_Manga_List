@@ -14,7 +14,7 @@ func GetTopAnime(clientID, rankingType, offset string) (models.AnimeResponse, er
 	var result models.AnimeResponse
 
 	apiURL := fmt.Sprintf(
-		"%s/anime/ranking?ranking_type=%s&offset=%s&limit=10",
+		"%s/anime/ranking?ranking_type=%s&offset=%s&limit=25",
 		config.BaseURL, rankingType, offset,
 	)
 
@@ -67,7 +67,7 @@ func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
 	var result models.AnimeResponse
 
 	apiURL := fmt.Sprintf(
-		"%s/anime?q=%s&offset=%s&limit=10",
+		"%s/anime?q=%s&offset=%s&limit=25",
 		config.BaseURL, url.QueryEscape(q), offset,
 	)
 

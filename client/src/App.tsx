@@ -1,4 +1,3 @@
-import { Stack } from "@chakra-ui/react";
 import Home from "./components/Home";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -10,14 +9,16 @@ const App = () => {
   const [queryFor, setQueryFor] = useState("anime");
   const [value, setValue] = useState("");
   const [rankingType, setRankingType] = useState("all");
+  const [offset, setOffset] = useState(0);
 
   return (
-    <Stack h={"100vh"}>
+    <div className="flex flex-col gap-2">
       <Navbar
         setQueryFor={setQueryFor}
         setValue={setValue}
         value={value}
         setRankingType={setRankingType}
+        setOffset={setOffset}
       />
       <BrowserRouter>
         <Routes>
@@ -30,6 +31,8 @@ const App = () => {
                 setValue={setValue}
                 rankingType={rankingType}
                 setRankingType={setRankingType}
+                offset={offset}
+                setOffset={setOffset}
               />
             }
           />
@@ -37,7 +40,7 @@ const App = () => {
           <Route path="/manga/:id" element={<MangaDetails />} />
         </Routes>
       </BrowserRouter>
-    </Stack>
+    </div>
   );
 };
 

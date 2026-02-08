@@ -1,4 +1,6 @@
 import {
+  Box,
+  Button,
   createListCollection,
   Grid,
   GridItem,
@@ -9,6 +11,7 @@ import {
 import { getTop, search } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BiSolidLeftArrow, BiSolidRightArrow } from "react-icons/bi";
 
 type HomeProps = {
   queryFor: string;
@@ -18,6 +21,9 @@ type HomeProps = {
 
   rankingType: string;
   setRankingType: React.Dispatch<React.SetStateAction<string>>;
+
+  offset: number;
+  setOffset: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const Home = ({
@@ -26,6 +32,8 @@ const Home = ({
   setValue,
   rankingType,
   setRankingType,
+  offset,
+  setOffset,
 }: HomeProps) => {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -60,15 +68,13 @@ const Home = ({
 
     const timeout = setTimeout(async () => {
       try {
-        let data;
-        if (value.trim() !== "") {
-          data = await search(value, queryFor);
-        } else {
-          data = await getTop(rankingType, queryFor);
-        }
+        const res =
+          value.trim() !== ""
+            ? await search(value, queryFor, offset)
+            : await getTop(rankingType, queryFor, offset);
 
         if (!cancelled) {
-          setData(data.data ?? []);
+          setData(res?.data ?? []);
         }
       } catch (error) {
         if (!cancelled) setData([]);
@@ -81,23 +87,24 @@ const Home = ({
       cancelled = true;
       clearTimeout(timeout);
     };
-  }, [rankingType, value, queryFor]);
+  }, [rankingType, value, queryFor, offset]);
 
   return (
-    <>
-      <div>
+    <section id="home" className="home">
+      <div className="flex flex-row justify-between">
         <Select.Root
           collection={frameworks}
           size="md"
           width="200px"
-          defaultValue={["all"]}
+          defaultValue={[rankingType]} //cgpt
           onValueChange={(e) => {
             setRankingType(e.value[0]);
             setValue("");
+            setOffset(0);
           }}
         >
           <Select.HiddenSelect />
-          <Select.Label>Type</Select.Label>
+          {/* <Select.Label>Type</Select.Label> */}
           <Select.Control>
             <Select.Trigger>
               <Select.ValueText placeholder="Select type" />
@@ -119,28 +126,69 @@ const Home = ({
             </Select.Positioner>
           </Portal>
         </Select.Root>
+
+        <Box>
+          <Button
+            disabled={offset === 0}
+            onClick={() => setOffset((o) => Math.max(0, o - 25))}
+            width={6}
+            height={6}
+          >
+            <BiSolidLeftArrow />
+          </Button>
+          <Button
+            onClick={() => setOffset((o) => o + 25)}
+            width={6}
+            height={6}
+            ml={2}
+          >
+            <BiSolidRightArrow />
+          </Button>
+        </Box>
       </div>
+
       <div>
         {loading ? (
           <Spinner size={"xl"} mt={10} />
+        ) : data.length === 0 ? (
+          <p>No results found</p>
         ) : (
-          <Grid templateColumns={"repeat(5, 1fr)"} gap={3}>
-            {data.map((item: any) => (
-              <GridItem
-                key={item.node.id}
-                cursor={"pointer"}
-                onClick={() => navigate(`/${queryFor}/${item.node.id}`)}
+          <>
+            <Grid
+              templateColumns={{
+                base: "repeat(2, 1fr)",
+                md: "repeat(3, 1fr)",
+                lg: "repeat(5, 1fr)",
+              }}
+              gap={3}
+            >
+              {data.map((item: any) => (
+                <GridItem
+                  key={item.node.id}
+                  cursor={"pointer"}
+                  onClick={() => navigate(`/${queryFor}/${item.node.id}`)}
+                >
+                  <div className="flex flex-col">
+                    <img src={item.node.main_picture.medium} alt="poster" />
+                    <h3>{item.node.title}</h3>
+                  </div>
+                </GridItem>
+              ))}
+            </Grid>
+
+            <Box mt={6} display={"flex"} gap={4} justifyContent={"center"}>
+              <Button
+                disabled={offset === 0}
+                onClick={() => setOffset((o) => Math.max(0, o - 25))}
               >
-                <div className="flex flex-col">
-                  <img src={item.node.main_picture.medium} alt="poster" />
-                  <h3>{item.node.title}</h3>
-                </div>
-              </GridItem>
-            ))}
-          </Grid>
+                Previous
+              </Button>
+              <Button onClick={() => setOffset((o) => o + 25)}>Next</Button>
+            </Box>
+          </>
         )}
       </div>
-    </>
+    </section>
   );
 };
 

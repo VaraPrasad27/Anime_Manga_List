@@ -5,8 +5,10 @@ import { useRef } from "react";
 type NavbarProps = {
   setQueryFor: React.Dispatch<React.SetStateAction<string>>;
   setRankingType: React.Dispatch<React.SetStateAction<string>>;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
+  setOffset: React.Dispatch<React.SetStateAction<number>>;
+
   value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const Navbar = ({
@@ -14,6 +16,7 @@ const Navbar = ({
   setRankingType,
   setValue,
   value,
+  setOffset,
 }: NavbarProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -29,12 +32,12 @@ const Navbar = ({
   ) : undefined;
 
   return (
-    <div className="flex flex-row justify-between">
-      <div>
-        <span>Anime, Manga Find</span>
+    <div className="nav">
+      <div className="icon">
+        <span>Anime | Manga Find</span>
       </div>
 
-      <div>
+      <div className="buttons">
         <SegmentGroup.Root
           defaultValue={"anime"}
           onValueChange={(e) => {
@@ -44,6 +47,7 @@ const Navbar = ({
               setQueryFor("manga");
             }
             setRankingType("all");
+            setOffset(0);
           }}
         >
           <SegmentGroup.Indicator />
@@ -56,13 +60,13 @@ const Navbar = ({
         </SegmentGroup.Root>
       </div>
 
-      <div>
+      <div className="search">
         <InputGroup endElement={endElement}>
           <Input
             ref={inputRef}
             placeholder="Search"
             value={value}
-            width={"200px"}
+            width={"250px"}
             onChange={(e) => {
               setValue(e.currentTarget.value);
             }}

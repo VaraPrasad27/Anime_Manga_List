@@ -14,7 +14,7 @@ func GetTopManga(clientID, rankingType, offset string) (models.MangaResponse, er
 
 	var result models.MangaResponse
 	apiURL := fmt.Sprintf(
-		"%s/manga/ranking?ranking_type=%s&offset=%s&limit=10",
+		"%s/manga/ranking?ranking_type=%s&offset=%s&limit=25",
 		config.BaseURL, rankingType, offset,
 	)
 
@@ -69,7 +69,7 @@ func SearchManga(clientID, q, offset string) (models.MangaResponse, error) {
 	var result models.MangaResponse
 
 	apiURL := fmt.Sprintf(
-		"%s/manga?q=%s&offset=%s&limit=10",
+		"%s/manga?q=%s&offset=%s&limit=25",
 		config.BaseURL, url.QueryEscape(q), offset,
 	)
 

@@ -25,7 +25,7 @@ const MangaDetails = () => {
   else if (!manga) return <p>Manga not found</p>;
 
   return (
-    <div>
+    <div className="details">
       <div className="flex flex-row">
         <div className="w-1/3">
           <img src={manga.main_picture.large} alt={manga.title} />
@@ -80,19 +80,23 @@ const MangaDetails = () => {
         </div>
       </div>
 
-      <p>Related Manges:</p>
-      <div className="flex flex-row gap-3">
-        {manga.related_manga?.map((r_manga: any) => (
-          <div
-            className="cursor-pointer"
-            onClick={() => navigate(`/manga/${r_manga.node.id}`)}
-          >
-            <p>{r_manga.relation_type_formatted}</p>
-            <img src={r_manga.node.main_picture.medium} alt="poster" />
-            <p>{r_manga.node.title}</p>
+      {manga.related_manga == null ? (
+        <>
+          <p>Related Manges:</p>
+          <div className="flex flex-row gap-3">
+            {manga.related_manga?.map((r_manga: any) => (
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate(`/manga/${r_manga.node.id}`)}
+              >
+                <p>{r_manga.relation_type_formatted}</p>
+                <img src={r_manga.node.main_picture.medium} alt="poster" />
+                <p>{r_manga.node.title}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : null}
     </div>
   );
 };

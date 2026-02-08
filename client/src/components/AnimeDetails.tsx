@@ -25,7 +25,7 @@ const AnimeDetails = () => {
   if (!anime) return <p>Anime not found</p>;
 
   return (
-    <div>
+    <div className="details">
       <div className="flex flex-row">
         <div className="w-1/3">
           <img src={anime.main_picture.large} alt={anime.title} />
@@ -38,7 +38,7 @@ const AnimeDetails = () => {
         </div>
 
         <div className="w-2/3">
-          <h1 className="text-6xl">{anime.title}</h1>
+          <h1>{anime.title}</h1>
 
           <div className="h-4" />
 
@@ -71,23 +71,27 @@ const AnimeDetails = () => {
         </div>
       </div>
 
-      <p>Related Animas:</p>
-      <div className="flex flex-row gap-3">
-        {anime.related_anime?.map((r_anime: any) => (
-          <div
-            className="cursor-pointer"
-            onClick={() => navigate(`/anime/${r_anime.node.id}`)}
-          >
-            {/* <p>{r_anime.relation_type}</p> */}
-            <p>{r_anime.relation_type_formatted}</p>
-            <img
-              src={r_anime.node.main_picture.medium}
-              alt={r_anime.node.title}
-            />
-            <p>{r_anime.node.title}</p>
+      {anime.related_anime == null ? (
+        <>
+          <p>Related Animas:</p>
+          <div className="flex flex-row gap-3">
+            {anime.related_anime?.map((r_anime: any) => (
+              <div
+                className="cursor-pointer"
+                onClick={() => navigate(`/anime/${r_anime.node.id}`)}
+              >
+                {/* <p>{r_anime.relation_type}</p> */}
+                <p>{r_anime.relation_type_formatted}</p>
+                <img
+                  src={r_anime.node.main_picture.medium}
+                  alt={r_anime.node.title}
+                />
+                <p>{r_anime.node.title}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      ) : null}
     </div>
   );
 };
