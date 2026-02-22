@@ -1,6 +1,5 @@
 "use client";
 
-import Navbar from "./components/navbar";
 import { useEffect, useState } from "react";
 import { getTop } from "./lib/api";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,7 @@ export default function Home() {
   const [value, setValue] = useState("anime");
   const [ranking, setRanking] = useState("all");
   const [data, setData] = useState<any[]>([]);
-  const { replace } = useRouter();
+  const { push } = useRouter();
   const options =
     value == "anime"
       ? [
@@ -81,7 +80,7 @@ export default function Home() {
               key={item.node.id}
               className="cursor-pointer w-[200]"
               onClick={() => {
-                replace(`/${value}/${item.node.id}`);
+                push(`/${value}/${item.node.id}`);
               }}
             >
               <img
