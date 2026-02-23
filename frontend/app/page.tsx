@@ -1,14 +1,14 @@
 "use client";
 
+import { Card } from "./components/cards";
 import { useEffect, useState } from "react";
 import { getTop } from "./lib/api";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [value, setValue] = useState("anime");
   const [ranking, setRanking] = useState("all");
   const [data, setData] = useState<any[]>([]);
-  const { push } = useRouter();
+
   const options =
     value == "anime"
       ? [
@@ -22,8 +22,6 @@ export default function Home() {
       : [
           { label: "All", value: "all" },
           { label: "Manga", value: "manga" },
-          // { label: "Top Novels", value: "novel" },
-          // { label: "Top Doujinshi", value: "doujin" },
           { label: "Manhwa", value: "manhwa" },
           { label: "Manhua", value: "manhua" },
           { label: "Most Popular", value: "bypopularity" },
@@ -45,12 +43,10 @@ export default function Home() {
   return (
     <>
       <section id="home">
-        <div id="ranking-by" className="flex gap-5">
+        <div className="flex gap-5">
           <div>
-            <label htmlFor="type">Top</label>
+            <label>Top</label>
             <select
-              name="type"
-              id="type"
               onChange={(e) => {
                 setValue(e.target.value);
                 setRanking("all");
@@ -61,7 +57,7 @@ export default function Home() {
             </select>
           </div>
 
-          <div id="ranks" className="flex gap-2">
+          <div className="flex gap-2">
             {options.map((option: any) => (
               <button
                 key={option.value}
@@ -76,21 +72,14 @@ export default function Home() {
 
         <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2">
           {data.map((item: any) => (
-            <div
+            <Card
               key={item.node.id}
-              className="cursor-pointer w-[200]"
-              onClick={() => {
-                push(`/${value}/${item.node.id}`);
-              }}
-            >
-              <img
-                src={item.node.main_picture.medium}
-                alt=""
-                height={300}
-                width={200}
-              />
-              <p>{item.node.title}</p>
-            </div>
+              src={item.node.main_picture.medium}
+              alt={item.node.title}
+              title={item.node.title}
+              id={item.node.id}
+              type={value}
+            />
           ))}
         </div>
       </section>

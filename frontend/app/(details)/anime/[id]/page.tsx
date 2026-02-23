@@ -1,5 +1,6 @@
-import { RecomCard, RelatedCard } from "@/app/components/cards";
+import { Card, RelatedCard } from "@/app/components/cards";
 import { getDetails } from "@/app/lib/api";
+import Image from "next/image";
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
@@ -9,7 +10,13 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex gap-3">
-        <img src={data.main_picture.large} alt={data.title} />
+        <Image
+          src={data.main_picture.large}
+          alt={data.title}
+          width={420}
+          height={600}
+          className="w-105 h-150"
+        />
         <div>
           <h1>{data.title}</h1>
           <p>{data.alternative_titles.synonyms}</p>
@@ -58,7 +65,7 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         <p>recommendations</p>
         <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2">
           {data.recommendations?.map((anime: any) => (
-            <RecomCard
+            <Card
               id={anime.node.id}
               src={anime.node.main_picture.medium}
               alt={anime.node.title}

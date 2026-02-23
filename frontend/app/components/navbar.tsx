@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -19,7 +20,9 @@ export default function Navbar() {
 
   return (
     <div className="flex justify-between m-1">
-      <span className="text-2xl">Anime | Manga Finder</span>
+      <Link href={"/"} className="text-2xl">
+        Anime | Manga Finder
+      </Link>
 
       <form className="flex items-center" onSubmit={handleSubmit}>
         <select

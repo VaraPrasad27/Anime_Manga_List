@@ -1,15 +1,17 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type MediaType = "anime" | "manga";
 
 type BaseCardProps = {
   id: number;
-  type: MediaType;
+  type: string;
   title: string;
-  src?: string;
-  alt?: string;
+  src: string;
+  alt: string;
 };
 
 type RelatedCardProps = BaseCardProps & {
@@ -27,31 +29,19 @@ export function RelatedCard({
   const { push } = useRouter();
 
   return (
-    <div
-      className="cursor-pointer"
-      onClick={() => {
-        push(`/${type}/${id}`);
-      }}
-    >
+    <Link className="cursor-pointer" href={`/${type}/${id}`}>
       <p>{relationType}</p>
-      <img src={src} alt={alt} />
+      <Image src={src} alt={alt} width={200} height={300} />
       <p>{title}</p>
-    </div>
+    </Link>
   );
 }
 
-export function RecomCard({ src, alt, title, id, type }: BaseCardProps) {
-  const { push } = useRouter();
-
+export function Card({ src, alt, title, id, type }: BaseCardProps) {
   return (
-    <div
-      className="cursor-pointer"
-      onClick={() => {
-        push(`/${type}/${id}`);
-      }}
-    >
+    <Link className="cursor-pointer" href={`/${type}/${id}`}>
+      <Image src={src} alt={alt} width={200} height={300} />
       <p>{title}</p>
-      <img src={src} alt={alt} />
-    </div>
+    </Link>
   );
 }
