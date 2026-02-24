@@ -39,9 +39,12 @@ export function RelatedCard({
 
 export function Card({ src, alt, title, id, type }: BaseCardProps) {
   return (
-    <Link className="cursor-pointer" href={`/${type}/${id}`}>
+    <Link
+      className="cursor-pointer justify-items-center w-50"
+      href={`/${type}/${id}`}
+    >
       <Image src={src} alt={alt} width={200} height={300} />
-      <p>{title}</p>
+      <p className="mt-0.5 w-40 text-center">{title}</p>
     </Link>
   );
 }

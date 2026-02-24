@@ -13,9 +13,11 @@ export default function Navbar() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!query.trim()) return;
-
-    router.push(`/search?type=${type}&q=${encodeURIComponent(query)}&offset=0`);
+    if (!query.trim()) {
+      router.push(`/search?type=${type}`);
+    } else {
+      router.push(`/search?type=${type}&q=${encodeURIComponent(query)}`);
+    }
   };
 
   return (

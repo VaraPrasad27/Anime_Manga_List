@@ -3,11 +3,15 @@
 import { Card } from "./components/cards";
 import { useEffect, useState } from "react";
 import { getTop } from "./lib/api";
+import PagingButton from "./components/pagingButton";
 
 export default function Home() {
   const [value, setValue] = useState("anime");
   const [ranking, setRanking] = useState("all");
+  const [offset, setOffset] = useState(0);
   const [data, setData] = useState<any[]>([]);
+  const [prevPage, setPrevPage] = useState(0);
+  const [nextPage, setNextPage] = useState(2);
 
   const options =
     value == "anime"
@@ -30,7 +34,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getTop(ranking, value);
+        const res = await getTop(ranking, value, offset);
         setData(res.data); // adjust depending on your API response shape
       } catch (err) {
         console.error("Failed to fetch:", err);
@@ -38,13 +42,13 @@ export default function Home() {
     };
 
     fetchData();
-  }, [value, ranking]);
+  }, [value, ranking, offset]);
 
   return (
     <>
-      <section id="home">
+      <section id="home" className="mt-6 px-3.75">
         <div className="flex gap-5">
-          <div>
+          <div className="content-center">
             <label>Top</label>
             <select
               onChange={(e) => {
@@ -57,7 +61,7 @@ export default function Home() {
             </select>
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-3 mr-auto">
             {options.map((option: any) => (
               <button
                 key={option.value}
@@ -68,9 +72,32 @@ export default function Home() {
               </button>
             ))}
           </div>
+
+          <div className="flex gap-2 pr-4">
+            <PagingButton
+              hoverText={`Page ${prevPage}`}
+              buttonText="<"
+              onClick={() => {
+                if (offset != 0 && prevPage != 0) {
+                  setPrevPage(prevPage - 1);
+                  setNextPage(nextPage - 1);
+                  setOffset(offset - 25);
+                }
+              }}
+            />
+            <PagingButton
+              hoverText={`Page ${nextPage}`}
+              buttonText=">"
+              onClick={() => {
+                setPrevPage(prevPage + 1);
+                setNextPage(nextPage + 1);
+                setOffset(offset + 25);
+              }}
+            />
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2">
+        <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3">
           {data.map((item: any) => (
             <Card
               key={item.node.id}
