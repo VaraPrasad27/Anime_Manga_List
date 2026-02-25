@@ -4,37 +4,22 @@ import { Card } from "./components/cards";
 import { useEffect, useState } from "react";
 import { getTop } from "./lib/api";
 import PagingButton from "./components/pagingButton";
+import { animeOptions, mangaOptions } from "./lib/constants";
 
 export default function Home() {
   const [value, setValue] = useState("anime");
   const [ranking, setRanking] = useState("all");
   const [offset, setOffset] = useState(0);
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Data[]>([]);
   const [prevPage, setPrevPage] = useState(0);
   const [nextPage, setNextPage] = useState(2);
 
-  const options =
-    value == "anime"
-      ? [
-          { label: "All", value: "all" },
-          { label: "Airing", value: "airing" },
-          { label: "Upcoming", value: "upcoming" },
-          { label: "TV", value: "tv" },
-          { label: "Movies", value: "movie" },
-          { label: "Most Popular", value: "bypopularity" },
-        ]
-      : [
-          { label: "All", value: "all" },
-          { label: "Manga", value: "manga" },
-          { label: "Manhwa", value: "manhwa" },
-          { label: "Manhua", value: "manhua" },
-          { label: "Most Popular", value: "bypopularity" },
-        ];
+  const options = value == "anime" ? animeOptions : mangaOptions;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getTop(ranking, value, offset);
+        const res: APIResponse = await getTop(ranking, value, offset);
         setData(res.data); // adjust depending on your API response shape
       } catch (err) {
         console.error("Failed to fetch:", err);
@@ -62,13 +47,13 @@ export default function Home() {
           </div>
 
           <div className="flex gap-3 mr-auto">
-            {options.map((option: any) => (
+            {options.map(({ value, label }) => (
               <button
-                key={option.value}
-                className={`cursor-pointer ${ranking == option.value ? "text-black" : "text-gray-400"}`}
-                onClick={() => setRanking(option.value)}
+                key={value}
+                className={`cursor-pointer ${ranking == value ? "text-black" : "text-gray-400"}`}
+                onClick={() => setRanking(value)}
               >
-                {option.label}
+                {label}
               </button>
             ))}
           </div>
@@ -98,13 +83,13 @@ export default function Home() {
         </div>
 
         <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3">
-          {data.map((item: any) => (
+          {data.map(({ node: { id, title, main_picture } }) => (
             <Card
-              key={item.node.id}
-              src={item.node.main_picture.medium}
-              alt={item.node.title}
-              title={item.node.title}
-              id={item.node.id}
+              key={id}
+              src={main_picture.medium}
+              alt={title}
+              title={title}
+              id={id}
               type={value}
             />
           ))}

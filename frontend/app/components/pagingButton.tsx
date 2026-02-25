@@ -5,7 +5,7 @@ export default function PagingButton({
 }: {
   buttonText: string;
   hoverText: string;
-  onClick: any;
+  onClick: () => void;
 }) {
   return (
     <div className="relative group w-max">

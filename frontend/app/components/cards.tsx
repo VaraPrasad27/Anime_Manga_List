@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-
-type MediaType = "anime" | "manga";
 
 type BaseCardProps = {
   id: number;
@@ -26,8 +23,6 @@ export function RelatedCard({
   type,
   id,
 }: RelatedCardProps) {
-  const { push } = useRouter();
-
   return (
     <Link className="cursor-pointer" href={`/${type}/${id}`}>
       <p>{relationType}</p>
