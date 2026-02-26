@@ -21,12 +21,12 @@ export default function Navbar() {
   };
 
   return (
-    <div className="flex justify-between m-1">
+    <header className="flex justify-between mt-5 px-3.75">
       <Link href={"/"} className="text-2xl">
         Anime | Manga Finder
       </Link>
 
-      <form className="flex items-center" onSubmit={handleSubmit}>
+      <form className="flex items-center gap-1" onSubmit={handleSubmit}>
         <select
           name="select"
           value={type}
@@ -36,10 +36,11 @@ export default function Navbar() {
           <option value="manga">Manga</option>
         </select>
 
-        <div className="flex border rounded-[5px]">
+        <div className="flex border rounded-[5px] px-2 gap-2">
           <input
             type="text"
             placeholder="Search"
+            className="h-10"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
@@ -47,6 +48,6 @@ export default function Navbar() {
           <button type="submit">Filter</button>
         </div>
       </form>
-    </div>
+    </header>
   );
 }

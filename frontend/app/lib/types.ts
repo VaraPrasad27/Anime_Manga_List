@@ -56,6 +56,7 @@ type AnimeDetails = {
   status: string;
   genres: Genre[];
   num_episodes: number;
+  start_season: { year?: number; season?: string };
   source: string;
   average_episode_duration: number;
   rating: string;
