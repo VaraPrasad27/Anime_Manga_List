@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/VaraPrasad27/Anime_Manga_List/server/config"
-	"github.com/VaraPrasad27/Anime_Manga_List/server/models"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/config"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/models"
 )
 
-func GetTopManga(clientID, rankingType, offset string) (models.MangaResponse, error) {
+func GetTopAnime(clientID, rankingType, offset string) (models.AnimeResponse, error) {
+	var result models.AnimeResponse
 
-	var result models.MangaResponse
 	apiURL := fmt.Sprintf(
-		"%s/manga/ranking?ranking_type=%s&offset=%s&limit=25",
+		"%s/anime/ranking?ranking_type=%s&offset=%s&limit=25",
 		config.BaseURL, rankingType, offset,
 	)
 
@@ -32,19 +32,17 @@ func GetTopManga(clientID, rankingType, offset string) (models.MangaResponse, er
 
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	return result, err
-
 }
 
-func GetMangaDetails(clientID, Id string) (models.MangaDetails, error) {
-
-	var result models.MangaDetails
+func GetAnimeDetails(clientID, Id string) (models.AnimeDetails, error) {
+	var result models.AnimeDetails
 
 	apiURL := fmt.Sprintf(
-		"%s/manga/%s?fields=id,title,main_picture,alternative_titles,"+
+		"%s/anime/%s?fields=id,title,main_picture,alternative_titles,"+
 			"start_date,end_date,synopsis,mean,rank,popularity,"+
 			"num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,"+
-			"my_list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,"+
-			"related_anime,related_manga,recommendations,serialization{name}",
+			"my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,"+
+			"background,related_anime,related_manga,recommendations,studios,statistics",
 		config.BaseURL, Id,
 	)
 
@@ -65,11 +63,11 @@ func GetMangaDetails(clientID, Id string) (models.MangaDetails, error) {
 
 }
 
-func SearchManga(clientID, q, offset string) (models.MangaResponse, error) {
-	var result models.MangaResponse
+func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
+	var result models.AnimeResponse
 
 	apiURL := fmt.Sprintf(
-		"%s/manga?q=%s&offset=%s&limit=25",
+		"%s/anime?q=%s&offset=%s&limit=25",
 		config.BaseURL, url.QueryEscape(q), offset,
 	)
 

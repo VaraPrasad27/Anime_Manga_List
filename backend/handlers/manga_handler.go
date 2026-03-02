@@ -3,17 +3,17 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/VaraPrasad27/Anime_Manga_List/server/services"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/services"
 	"github.com/gin-gonic/gin"
 )
 
-func GetTopAnime(clientId string) gin.HandlerFunc {
+func GetTopManga(clientId string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		rankingType := ctx.DefaultQuery("ranking_type", "all")
 		offset := ctx.DefaultQuery("offset", "0")
 
-		data, err := services.GetTopAnime(clientId, rankingType, offset)
+		data, err := services.GetTopManga(clientId, rankingType, offset)
 		if err != nil {
 			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return
@@ -23,7 +23,7 @@ func GetTopAnime(clientId string) gin.HandlerFunc {
 	}
 }
 
-func GetAnimeDetails(clientId string) gin.HandlerFunc {
+func GetMangaDetails(clientId string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		id := ctx.Param("id")
@@ -32,7 +32,7 @@ func GetAnimeDetails(clientId string) gin.HandlerFunc {
 			return
 		}
 
-		data, err := services.GetAnimeDetails(clientId, id)
+		data, err := services.GetMangaDetails(clientId, id)
 		if err != nil {
 			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return
@@ -42,7 +42,7 @@ func GetAnimeDetails(clientId string) gin.HandlerFunc {
 	}
 }
 
-func SearchAnime(clientId string) gin.HandlerFunc {
+func SearchManga(clientId string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		q := ctx.Query("q")
@@ -50,10 +50,9 @@ func SearchAnime(clientId string) gin.HandlerFunc {
 
 		if q == "" {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "q is required"})
-			return
 		}
 
-		data, err := services.SearchAnime(clientId, q, offset)
+		data, err := services.SearchManga(clientId, q, offset)
 		if err != nil {
 			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return

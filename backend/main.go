@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"github.com/VaraPrasad27/Anime_Manga_List/server/config"
-	"github.com/VaraPrasad27/Anime_Manga_List/server/routes"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/config"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )

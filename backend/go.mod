@@ -1,4 +1,4 @@
-module github.com/VaraPrasad27/Anime_Manga_List/server
+module github.com/VaraPrasad27/Anime_Manga_List/backend
 
 go 1.25.6
 
