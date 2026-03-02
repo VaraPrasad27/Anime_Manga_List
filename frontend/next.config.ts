@@ -5,8 +5,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "myanimelist.net",
+        pathname: "/images/**",
+      },
+      {
+        protocol: "https",
         hostname: "cdn.myanimelist.net",
-        port: "",
+
         pathname: "/images/**",
       },
     ],

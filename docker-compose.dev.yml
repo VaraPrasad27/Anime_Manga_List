@@ -3,11 +3,11 @@ version: "3.9"
 services:
   backend:
     build:
-      context: ./server
+      context: ./backend
       dockerfile: Dockerfile.dev
-    container_name: server_dev
+    container_name: backend_dev
     volumes:
-      - ./server:/app
+      - ./backend:/app
     ports:
       - "8080:8080"
     environment:

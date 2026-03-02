@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"github.com/VaraPrasad27/Anime_Manga_List/server/handlers"
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/handlers"
 	"github.com/gin-gonic/gin"
 )
 
