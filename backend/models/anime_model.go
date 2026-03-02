@@ -24,12 +24,18 @@ type AnimeDetails struct {
 	Status             string            `json:"status"`
 	Genre              []Genre           `json:"genres"`
 	NumEpisodes        int               `json:"num_episodes"`
+	StartSeason        StartSeason       `json:"start_season"`
 	Source             string            `json:"source"`
 	AvgEpisodeDuration int               `json:"average_episode_duration"`
 	Rating             string            `json:"rating"`
 	RelatedAnime       []RelatedAnime    `json:"related_anime"`
 	Recommendations    []Recommendations `json:"recommendations"`
 	Studios            []Studios         `json:"studios"`
+}
+
+type StartSeason struct {
+	Year   int    `json:"year"`
+	Season string `json:"season"`
 }
 
 type Studios struct {

@@ -2,7 +2,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+<<<<<<< HEAD
 First, run the development backend:
+=======
+First, run the development server:
+>>>>>>> parent of 682592c (Revert "Next.js+go")
 
 ```bash
 npm run dev
