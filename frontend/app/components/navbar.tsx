@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 
 export default function Navbar() {
   const router = useRouter();
@@ -10,9 +10,7 @@ export default function Navbar() {
   const [type, setType] = useState("anime");
   const [query, setQuery] = useState("");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (!query.trim()) {
       router.push(`/search?type=${type}`);
     } else {
@@ -26,7 +24,13 @@ export default function Navbar() {
         Anime | Manga Finder
       </Link>
 
-      <form className="flex items-center gap-1" onSubmit={handleSubmit}>
+      <form
+        className="flex items-center gap-1"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <select
           name="select"
           value={type}

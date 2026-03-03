@@ -31,11 +31,12 @@ export default function Home() {
 
   return (
     <>
-      <section id="home" className="mt-6 px-3.75">
-        <div className="flex gap-5">
+      <section id="home" className="mt-6 px-3.75" aria-label="Top anime and manga">
+        <nav className="flex gap-5" aria-label="Filter and pagination">
           <div className="content-center">
-            <label>Top</label>
+            <label htmlFor="media-type">Top</label>
             <select
+              id="media-type"
               onChange={(e) => {
                 setValue(e.target.value);
                 setRanking("all");
@@ -80,20 +81,21 @@ export default function Home() {
               }}
             />
           </div>
-        </div>
+        </nav>
 
-        <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3">
+        <ul className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3 list-none m-0 p-0">
           {data.map(({ node: { id, title, main_picture } }) => (
-            <Card
-              key={id}
-              src={main_picture.medium}
-              alt={title}
-              title={title}
-              id={id}
-              type={value}
-            />
+            <li key={id}>
+              <Card
+                src={main_picture.medium}
+                alt={title}
+                title={title}
+                id={id}
+                type={value}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     </>
   );

@@ -22,19 +22,20 @@ export default async function Page({
   }
 
   return (
-    <section className="mt-6 px-3.75">
-      <div className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3">
+    <section className="mt-6 px-3.75" aria-label="Search results">
+      <ul className="grid lg:grid-cols-6 md:grid-cols-3 grid-cols-2 gap-3 pt-3 list-none m-0 p-0">
         {result.map((item: any) => (
-          <Card
-            key={item.node.id}
-            src={item.node.main_picture.medium}
-            alt={item.node.title}
-            title={item.node.title}
-            id={item.node.id}
-            type={type}
-          />
+          <li key={item.node.id}>
+            <Card
+              src={item.node.main_picture.medium}
+              alt={item.node.title}
+              title={item.node.title}
+              id={item.node.id}
+              type={type}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

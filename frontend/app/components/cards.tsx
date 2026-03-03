@@ -24,22 +24,26 @@ export function RelatedCard({
   id,
 }: RelatedCardProps) {
   return (
-    <Link className="cursor-pointer" href={`/${type}/${id}`}>
-      <p>{relationType}</p>
-      <Image src={src} alt={alt} width={200} height={300} />
-      <p>{title}</p>
-    </Link>
+    <article>
+      <Link className="cursor-pointer block" href={`/${type}/${id}`}>
+        <span className="block text-sm text-gray-600">{relationType}</span>
+        <Image src={src} alt={alt} width={200} height={300} />
+        <span className="block mt-0.5">{title}</span>
+      </Link>
+    </article>
   );
 }
 
 export function Card({ src, alt, title, id, type }: BaseCardProps) {
   return (
-    <Link
-      className="cursor-pointer justify-items-center w-50"
-      href={`/${type}/${id}`}
-    >
-      <Image src={src} alt={alt} width={200} height={300} />
-      <p className="mt-0.5 w-40 text-center">{title}</p>
-    </Link>
+    <article>
+      <Link
+        className="cursor-pointer block justify-items-center w-50"
+        href={`/${type}/${id}`}
+      >
+        <Image src={src} alt={alt} width={200} height={300} />
+        <span className="block mt-0.5 w-40 text-center">{title}</span>
+      </Link>
+    </article>
   );
 }
