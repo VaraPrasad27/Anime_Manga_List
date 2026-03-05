@@ -1,9 +1,12 @@
+import clsx from "clsx";
+import type { ReactNode } from "react";
+
 export default function PagingButton({
   buttonText,
   hoverText,
   onClick,
 }: {
-  buttonText: string;
+  buttonText: ReactNode;
   hoverText: string;
   onClick: () => void;
 }) {
@@ -11,7 +14,7 @@ export default function PagingButton({
     <div className="relative group w-max">
       <button
         data-original-title={hoverText}
-        className={`cursor-pointer text-xl ${hoverText != "Page 0" ? "text-black" : "text-gray-400"}`}
+        className={clsx("cursor-pointer text-xl", hoverText !== "Page 0" ? "text-black" : "text-gray-400")}
         onClick={onClick}
         disabled={hoverText == "Page 0"}
       >

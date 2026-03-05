@@ -1,6 +1,7 @@
- "use client";
+"use client";
 
 import { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { RelatedCard } from "@/app/components/cards";
 
 type RelatedNode = {
@@ -39,7 +40,9 @@ export function CollapsibleRelatedSection({
         aria-expanded={open}
       >
         <span>{title}</span>
-        <span aria-hidden>{open ? "−" : "+"}</span>
+        <span aria-hidden>
+          {open ? <IoIosArrowUp /> : <IoIosArrowDown />}
+        </span>
       </button>
 
       {open && (

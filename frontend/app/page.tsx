@@ -1,10 +1,12 @@
 "use client";
 
+import clsx from "clsx";
 import { Card } from "./components/cards";
 import { useEffect, useState } from "react";
 import { getTop } from "./lib/api";
 import PagingButton from "./components/pagingButton";
 import { animeOptions, mangaOptions } from "./lib/constants";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export default function Home() {
   const [value, setValue] = useState("anime");
@@ -51,7 +53,7 @@ export default function Home() {
             {options.map(({ value, label }) => (
               <button
                 key={value}
-                className={`cursor-pointer ${ranking == value ? "text-black" : "text-gray-400"}`}
+                className={clsx("cursor-pointer", ranking === value ? "text-black" : "text-gray-400")}
                 onClick={() => setRanking(value)}
               >
                 {label}
@@ -62,7 +64,7 @@ export default function Home() {
           <div className="flex gap-2 pr-4">
             <PagingButton
               hoverText={`Page ${prevPage}`}
-              buttonText="<"
+              buttonText={<IoIosArrowBack />}
               onClick={() => {
                 if (offset != 0 && prevPage != 0) {
                   setPrevPage(prevPage - 1);
@@ -73,7 +75,7 @@ export default function Home() {
             />
             <PagingButton
               hoverText={`Page ${nextPage}`}
-              buttonText=">"
+              buttonText={<IoIosArrowForward />}
               onClick={() => {
                 setPrevPage(prevPage + 1);
                 setNextPage(nextPage + 1);

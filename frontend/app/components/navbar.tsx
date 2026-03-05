@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BiSearch } from "react-icons/bi";
 
 export default function Navbar() {
   const router = useRouter();
@@ -11,11 +12,11 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
 
   const handleSubmit = () => {
-    if (!query.trim()) {
-      router.push(`/search?type=${type}`);
-    } else {
-      router.push(`/search?type=${type}&q=${encodeURIComponent(query)}`);
-    }
+    router.push(`/search?type=${type}&q=${encodeURIComponent(query)}`);
+  };
+
+  const handleFilterClick = () => {
+    router.push(`/search?type=${type}`);
   };
 
   return (
@@ -40,16 +41,25 @@ export default function Navbar() {
           <option value="manga">Manga</option>
         </select>
 
-        <div className="flex border rounded-[5px] px-2 gap-2">
+        <div className="flex border rounded-[5px] px-2 gap-2 items-center">
           <input
             type="text"
-            placeholder="Search"
+            placeholder={type === "anime" ? "Search anime..." : "Search manga..."}
+            required
             className="h-10"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-
-          <button type="submit">Filter</button>
+          <button type="submit" aria-label="Search" className="p-1 cursor-pointer">
+            <BiSearch />
+          </button>
+          <button
+            type="button"
+            className="px-3 py-1 text-sm rounded bg-black text-white hover:bg-gray-900 cursor-pointer"
+            onClick={handleFilterClick}
+          >
+            Filter
+          </button>
         </div>
       </form>
     </header>
