@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex justify-between mt-5 px-3.75">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between px-3.75 py-4 bg-white">
       <Link href={"/"} className="text-2xl">
         Anime | Manga Finder
       </Link>
