@@ -47,105 +47,118 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     ) ?? [];
 
   return (
-    <main className="flex flex-col gap-5 mt-8 px-3.75">
-      <article id="details" className="flex flex-row gap-5">
-        <figure className="flex flex-col pt-5 gap-3 w-[20%]">
-          <Image
-            src={main_picture.medium}
-            alt={title}
-            width={220}
-            height={320}
-            className="self-center-safe"
-          />
-          <figcaption className="text-[16px] text-center">
-            <p>Rating: {mean} / 10</p>
-            <p>Ranked #{rank}</p>
-            <p>Popularity #{popularity}</p>
-          </figcaption>
-        </figure>
+    <div className="flex flex-col gap-5 ">
+      <div className="w-full relative overflow-hidden">
+        <div
+          className="absolute top-0 left-0 right-0 bottom-0 w-full h-full bg-cover bg-center opacity-[0.35] blur-[20px] grayscale-[1] overflow-hidden"
+          style={{ backgroundImage: `url(${main_picture.large})` }}
+        />
+        <article id="details" className="flex flex-row gap-5 relative mt-8">
+          <figure className="flex flex-col pt-5 gap-3 w-[20%]">
+            <Image
+              src={main_picture.medium}
+              alt={title}
+              width={220}
+              height={320}
+              className="self-center-safe"
+            />
+            <figcaption className="text-[16px] text-center">
+              <p>Rating: {mean} / 10</p>
+              <p>Ranked #{rank}</p>
+              <p>Popularity #{popularity}</p>
+            </figcaption>
+          </figure>
 
-        <div className="flex flex-col w-[50%]">
-          <header className="pb-4">
-            <h1 className="text-5xl">{title}</h1>
-            <p className="text-xl">{alternative_titles.en}</p>
-          </header>
+          <div className="flex flex-col w-[50%]">
+            <header className="pb-4">
+              <h1 className="text-5xl">{title}</h1>
+              <p className="text-xl">{alternative_titles.en}</p>
+            </header>
 
-          <div className="flex gap-0.5 pb-4 text-[12px] font-bold">
-            <span className="uppercase p-1 border rounded-l-md">{rating}</span>
-            <span className="uppercase p-1 border">{media_type}</span>
-            <span className="p-1 border">{num_episodes} eps</span>
-            <span className="p-1 border rounded-r-md">
-              {(average_episode_duration / 60).toFixed(1)}m
-            </span>
+            <div className="flex gap-0.5 pb-4 text-[12px] font-bold">
+              <span className="uppercase p-1 border rounded-l-md">
+                {rating}
+              </span>
+              <span className="uppercase p-1 border">{media_type}</span>
+              <span className="p-1 border">{num_episodes} eps</span>
+              <span className="p-1 border rounded-r-md">
+                {(average_episode_duration / 60).toFixed(1)}m
+              </span>
+            </div>
+
+            <p className="text-[16px]">{synopsis}</p>
           </div>
 
-          <p className="text-[16px]">{synopsis}</p>
-        </div>
+          <aside className="text-[16px] pt-15 px-6 w-[25%] h-screen -mt-9 bg-[rgba(0,0,0,0.1)]">
+            <dl className="space-y-1">
+              <div>
+                <dt className="font-bold inline">Japanese: </dt>
+                <dd className="inline">{alternative_titles.ja}</dd>
+              </div>
+              <div>
+                <dt className="font-bold inline">Synonyms: </dt>
+                <dd className="inline">{alternative_titles.synonyms}</dd>
+              </div>
+              <div>
+                <dt className="font-bold inline">Aired: </dt>
+                <dd className="inline">
+                  {formatDate(start_date)} to {formatDate(end_date)}
+                </dd>
+              </div>
+              <div className="capitalize">
+                <dt className="font-bold inline">Premiered: </dt>
+                <dd className="inline">
+                  {start_season.season} {start_season.year}
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold inline">Duration: </dt>
+                <dd className="inline">
+                  {(average_episode_duration / 60).toFixed(1)}m
+                </dd>
+              </div>
+              <div>
+                <dt className="font-bold inline">Status: </dt>
+                <dd className="inline">{status}</dd>
+              </div>
+              <div>
+                <dt className="font-bold inline">Source: </dt>
+                <dd className="inline">{source}</dd>
+              </div>
+            </dl>
 
-        <aside className="text-[16px] pt-15 pl-6 w-[25%]">
-          <dl className="space-y-1">
-            <div>
-              <dt className="font-bold inline">Japanese: </dt>
-              <dd className="inline">{alternative_titles.ja}</dd>
+            <div className="flex flex-wrap gap-2 items-center mt-2 border-t border-b py-2 border-[rgba(0,0,0,0.2)]">
+              <span className="font-bold">Genres:</span>
+              <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
+                {genres?.map(({ id, name }) => (
+                  <li key={id}>
+                    <span className="inline-flex items-center rounded-full bg-gray-400 px-2 py-1 text-xs font-medium text-black inset-ring inset-ring-gray-400/20">
+                      {name}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div>
-              <dt className="font-bold inline">Synonyms: </dt>
-              <dd className="inline">{alternative_titles.synonyms}</dd>
-            </div>
-            <div>
-              <dt className="font-bold inline">Aired: </dt>
-              <dd className="inline">
-                {formatDate(start_date)} to {formatDate(end_date)}
-              </dd>
-            </div>
-            <div className="capitalize">
-              <dt className="font-bold inline">Premiered: </dt>
-              <dd className="inline">
-                {start_season.season} {start_season.year}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-bold inline">Duration: </dt>
-              <dd className="inline">{(average_episode_duration / 60).toFixed(1)}m</dd>
-            </div>
-            <div>
-              <dt className="font-bold inline">Status: </dt>
-              <dd className="inline">{status}</dd>
-            </div>
-            <div>
-              <dt className="font-bold inline">Source: </dt>
-              <dd className="inline">{source}</dd>
-            </div>
-          </dl>
 
-          <div className="flex flex-wrap gap-2 items-center mt-2">
-            <span className="font-bold">Genres:</span>
-            <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
-              {genres?.map(({ id, name }) => (
-                <li
-                  key={id}
-                  className="border rounded-[10px] p-0.5"
-                >
-                  {name}
-                </li>
-              ))}
-            </ul>
-          </div>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <span className="font-bold">Studios:</span>
+              <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
+                {studios?.map(({ id, name }) => (
+                  <li key={id}>{name}</li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </article>
+      </div>
 
-          <div className="flex flex-wrap gap-2 mt-2">
-            <span className="font-bold">Studios:</span>
-            <ul className="flex flex-wrap gap-2 list-none m-0 p-0">
-              {studios?.map(({ id, name }) => (
-                <li key={id}>{name}</li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-      </article>
-
-      {(prequelsAndSequels.length > 0 || sideStories.length > 0 || others.length > 0) && (
+      {(prequelsAndSequels.length > 0 ||
+        sideStories.length > 0 ||
+        others.length > 0) && (
         <section id="related-anime" aria-labelledby="related-anime-heading">
-          <h2 id="related-anime-heading" className="text-xl font-semibold mb-2">Related Anime</h2>
+          <h2 id="related-anime-heading" className="text-xl font-semibold mb-2">
+            Related Anime
+          </h2>
 
           {prequelsAndSequels.length > 0 && (
             <div className="mt-2">
@@ -179,7 +192,12 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
 
       {(recommendations?.length ?? 0) > 0 && (
         <section id="recommendations" aria-labelledby="recommendations-heading">
-          <h2 id="recommendations-heading" className="text-xl font-semibold mb-2">Recommendations</h2>
+          <h2
+            id="recommendations-heading"
+            className="text-xl font-semibold mb-2"
+          >
+            Recommendations
+          </h2>
           <ul className="grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2 gap-3 list-none m-0 p-0">
             {recommendations?.map(({ node: { id, title, main_picture } }) => (
               <li key={id}>
@@ -195,7 +213,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
           </ul>
         </section>
       )}
-    </main>
+    </div>
   );
 }
-

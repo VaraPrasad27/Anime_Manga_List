@@ -20,7 +20,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between px-3.75 py-4 bg-white">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-between px-3.75 py-4 bg-[rgba(255,255,255,0.85)] backdrop-blur-md">
       <Link href={"/"} className="text-2xl">
         Anime | Manga Finder
       </Link>
@@ -44,13 +44,19 @@ export default function Navbar() {
         <div className="flex border rounded-[5px] px-2 gap-2 items-center">
           <input
             type="text"
-            placeholder={type === "anime" ? "Search anime..." : "Search manga..."}
+            placeholder={
+              type === "anime" ? "Search anime..." : "Search manga..."
+            }
             required
-            className="h-10"
+            className="h-10 focus:outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="submit" aria-label="Search" className="p-1 cursor-pointer">
+          <button
+            type="submit"
+            aria-label="Search"
+            className="p-1 cursor-pointer"
+          >
             <BiSearch />
           </button>
           <button
