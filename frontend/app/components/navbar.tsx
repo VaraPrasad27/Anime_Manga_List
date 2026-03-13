@@ -12,11 +12,11 @@ export default function Navbar() {
   const [query, setQuery] = useState("");
 
   const handleSubmit = () => {
-    router.push(`/search?type=${type}&q=${encodeURIComponent(query)}`);
+    router.push(`/search?type=${type}&q=${encodeURIComponent(query)}&page=1`);
   };
 
   const handleFilterClick = () => {
-    router.push(`/search?type=${type}`);
+    router.push(`/search?type=${type}&page=1`);
   };
 
   return (

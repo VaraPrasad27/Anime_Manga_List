@@ -33,7 +33,11 @@ export default function Home() {
 
   return (
     <>
-      <section id="home" className="mt-6 px-3.75" aria-label="Top anime and manga">
+      <section
+        id="home"
+        className="mt-6 px-3.75"
+        aria-label="Top anime and manga"
+      >
         <nav className="flex gap-5" aria-label="Filter and pagination">
           <div className="content-center">
             <label htmlFor="media-type">Top</label>
@@ -53,7 +57,10 @@ export default function Home() {
             {options.map(({ value, label }) => (
               <button
                 key={value}
-                className={clsx("cursor-pointer", ranking === value ? "text-black" : "text-gray-400")}
+                className={clsx(
+                  "cursor-pointer",
+                  ranking === value ? "text-black" : "text-gray-400",
+                )}
                 onClick={() => setRanking(value)}
               >
                 {label}
