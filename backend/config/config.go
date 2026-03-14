@@ -3,13 +3,13 @@ package config
 import (
 	"log"
 	"os"
+	"strings"
 
+	"github.com/VaraPrasad27/Anime_Manga_List/backend/models"
 	"github.com/joho/godotenv"
 )
 
-const BaseURL = "https://api.myanimelist.net/v2"
-
-func LoadEnv() string {
+func LoadEnv() models.Config {
 	if err := godotenv.Load(); err != nil {
 		log.Println("Warning: .env file not found")
 	}
@@ -19,5 +19,19 @@ func LoadEnv() string {
 		log.Fatal("CLIENT_ID not set")
 	}
 
-	return clientID
+	malURL := os.Getenv("MAL_URL")
+	if malURL == "" {
+		log.Fatal("MAL_URL not set")
+	}
+
+	allowedOrigins := strings.Split(os.Getenv("ALLOWED_ORIGINS"), ",")
+	if len(allowedOrigins) == 0 {
+		log.Fatal("ALLOWED_ORIGINS not set")
+	}
+
+	return models.Config{
+		ClientID:       clientID,
+		MALURL:         malURL,
+		AllowedOrigins: allowedOrigins,
+	}
 }

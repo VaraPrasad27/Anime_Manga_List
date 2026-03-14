@@ -11,15 +11,20 @@ import (
 
 func main() {
 
-	clientId := config.LoadEnv()
+	clientId := config.LoadEnv().ClientID
 	if clientId == "" {
 		log.Fatal("CLIENT_ID not found in env")
+	}
+
+	allowedOrigins := config.LoadEnv().AllowedOrigins
+	if len(allowedOrigins) == 0 {
+		log.Fatal("ALLOWED_ORIGINS not found in env")
 	}
 
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:5173", "http://localhost:3000"},
+		AllowOrigins:     allowedOrigins,
 		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE"},
 		AllowHeaders:     []string{"Origin", "Content-Type"},
 		AllowCredentials: true,

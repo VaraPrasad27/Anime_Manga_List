@@ -1,5 +1,11 @@
 package models
 
+type Config struct {
+	ClientID       string
+	MALURL         string
+	AllowedOrigins []string
+}
+
 type MainPicture struct {
 	Medium string `json:"medium"`
 	Large  string `json:"large"`

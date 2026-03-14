@@ -15,7 +15,7 @@ func GetTopAnime(clientID, rankingType, offset string) (models.AnimeResponse, er
 
 	apiURL := fmt.Sprintf(
 		"%s/anime/ranking?ranking_type=%s&offset=%s&limit=25",
-		config.BaseURL, rankingType, offset,
+		config.LoadEnv().MALURL, rankingType, offset,
 	)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
@@ -43,7 +43,7 @@ func GetAnimeDetails(clientID, Id string) (models.AnimeDetails, error) {
 			"num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,"+
 			"my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,"+
 			"background,related_anime,related_manga,recommendations,studios,statistics",
-		config.BaseURL, Id,
+		config.LoadEnv().MALURL, Id,
 	)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
@@ -68,7 +68,7 @@ func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
 
 	apiURL := fmt.Sprintf(
 		"%s/anime?q=%s&offset=%s&limit=25",
-		config.BaseURL, url.QueryEscape(q), offset,
+		config.LoadEnv().MALURL, url.QueryEscape(q), offset,
 	)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
