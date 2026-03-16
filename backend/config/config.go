@@ -24,6 +24,11 @@ func LoadEnv() models.Config {
 		log.Fatal("MAL_URL not set")
 	}
 
+	jikanURL := os.Getenv("JIKAN_URL")
+	if jikanURL == "" {
+		log.Fatal("JIKAN_URL not set")
+	}
+
 	allowedOrigins := strings.Split(os.Getenv("ALLOWED_ORIGINS"), ",")
 	if len(allowedOrigins) == 0 {
 		log.Fatal("ALLOWED_ORIGINS not set")
@@ -32,6 +37,7 @@ func LoadEnv() models.Config {
 	return models.Config{
 		ClientID:       clientID,
 		MALURL:         malURL,
+		JikanURL:       jikanURL,
 		AllowedOrigins: allowedOrigins,
 	}
 }

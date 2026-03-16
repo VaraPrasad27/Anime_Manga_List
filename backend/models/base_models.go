@@ -3,6 +3,7 @@ package models
 type Config struct {
 	ClientID       string
 	MALURL         string
+	JikanURL       string
 	AllowedOrigins []string
 }
 

@@ -87,3 +87,23 @@ func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
 	return result, err
 
 }
+
+func GetFullAnimeDetails(Id string) (any, error) {
+	var result any
+
+	apiURL := fmt.Sprintf("%s/anime/%s/full", config.LoadEnv().JikanURL, Id)
+
+	req, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return result, err
+	}
+
+	res, err := Client.Do(req)
+	if err != nil {
+		return result, err
+	}
+	defer res.Body.Close()
+
+	err = json.NewDecoder(res.Body).Decode(&result)
+	return result, err
+}

@@ -62,3 +62,21 @@ func SearchAnime(clientId string) gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, data)
 	}
 }
+
+func GetFullAnimeDetails() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		if id == "" {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": "id is requires"})
+			return
+		}
+
+		data, err := services.GetFullAnimeDetails(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, data)
+	}
+}
