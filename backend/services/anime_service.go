@@ -88,10 +88,10 @@ func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
 
 }
 
-func GetFullAnimeDetails(Id string) (any, error) {
-	var result any
+func GetAnimeTrailer(Id string) (models.Trailer, error) {
+	var result models.Trailer
 
-	apiURL := fmt.Sprintf("%s/anime/%s/full", config.LoadEnv().JikanURL, Id)
+	apiURL := fmt.Sprintf("%s/anime/%s/videos", config.LoadEnv().JikanURL, Id)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
 	if err != nil {

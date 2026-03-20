@@ -13,7 +13,7 @@ func RegisterRoutes(r *gin.Engine, clientId string) {
 		anime.GET("/top", handlers.GetTopAnime(clientId))
 		anime.GET("/search", handlers.SearchAnime(clientId))
 		anime.GET("/:id", handlers.GetAnimeDetails(clientId))
-		anime.GET("/full/:id", handlers.GetFullAnimeDetails())
+		anime.GET("/videos/:id", handlers.GetAnimeTrailer())
 	}
 
 	manga := api.Group("/manga")

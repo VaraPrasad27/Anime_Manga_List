@@ -63,7 +63,7 @@ func SearchAnime(clientId string) gin.HandlerFunc {
 	}
 }
 
-func GetFullAnimeDetails() gin.HandlerFunc {
+func GetAnimeTrailer() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Param("id")
 		if id == "" {
@@ -71,7 +71,7 @@ func GetFullAnimeDetails() gin.HandlerFunc {
 			return
 		}
 
-		data, err := services.GetFullAnimeDetails(id)
+		data, err := services.GetAnimeTrailer(id)
 		if err != nil {
 			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
 			return
