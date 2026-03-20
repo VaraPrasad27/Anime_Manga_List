@@ -80,3 +80,39 @@ func GetAnimeTrailer() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, data)
 	}
 }
+
+func GetAnimeCharacters() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		if id == "" {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": "id is required"})
+			return
+		}
+
+		data, err := services.GetAnimeCharacters(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, data)
+	}
+}
+
+func GetAnimeStaff() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		id := ctx.Param("id")
+		if id == "" {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": "id is required"})
+			return
+		}
+
+		data, err := services.GetAnimeStaff(id)
+		if err != nil {
+			ctx.JSON(http.StatusBadGateway, gin.H{"error": err.Error()})
+			return
+		}
+
+		ctx.JSON(http.StatusOK, data)
+	}
+}

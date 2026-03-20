@@ -10,6 +10,8 @@ import (
 	"github.com/VaraPrasad27/Anime_Manga_List/backend/models"
 )
 
+// MyAnimeList beta v2 api
+
 func GetTopAnime(clientID, rankingType, offset string) (models.AnimeResponse, error) {
 	var result models.AnimeResponse
 
@@ -88,10 +90,52 @@ func SearchAnime(clientID, q, offset string) (models.AnimeResponse, error) {
 
 }
 
+// Jikan Unofficial MyAnimeList api v4
+
 func GetAnimeTrailer(Id string) (models.Trailer, error) {
 	var result models.Trailer
 
 	apiURL := fmt.Sprintf("%s/anime/%s/videos", config.LoadEnv().JikanURL, Id)
+
+	req, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return result, err
+	}
+
+	res, err := Client.Do(req)
+	if err != nil {
+		return result, err
+	}
+	defer res.Body.Close()
+
+	err = json.NewDecoder(res.Body).Decode(&result)
+	return result, err
+}
+
+func GetAnimeCharacters(Id string) (models.Characters, error) {
+	var result models.Characters
+
+	apiURL := fmt.Sprintf("%s/anime/%s/characters", config.LoadEnv().JikanURL, Id)
+
+	req, err := http.NewRequest("GET", apiURL, nil)
+	if err != nil {
+		return result, err
+	}
+
+	res, err := Client.Do(req)
+	if err != nil {
+		return result, err
+	}
+	defer res.Body.Close()
+
+	err = json.NewDecoder(res.Body).Decode(&result)
+	return result, err
+}
+
+func GetAnimeStaff(Id string) (models.Staff, error) {
+	var result models.Staff
+
+	apiURL := fmt.Sprintf("%s/anime/%s/staff", config.LoadEnv().JikanURL, Id)
 
 	req, err := http.NewRequest("GET", apiURL, nil)
 	if err != nil {

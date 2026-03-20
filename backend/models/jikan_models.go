@@ -12,3 +12,58 @@ type Trailer struct {
 		} `json:"promo"`
 	} `json:"data"`
 }
+
+type Characters struct {
+	CData []struct {
+		Character struct {
+			MALId  int    `json:"mal_id"`
+			URL    string `json:"url"`
+			Images struct {
+				JPG struct {
+					ImageURL      string `json:"image_url"`
+					SmallImageURL string `json:"small_image_url"`
+				} `json:"jpg"`
+				Webp struct {
+					ImageURL      string `json:"image_url"`
+					SmallImageURL string `json:"small_image_url"`
+				} `json:"webp"`
+			} `json:"images"`
+			Name string `json:"name"`
+		} `json:"character"`
+		Role        string `json:"role"`
+		VoiceActors []struct {
+			Person struct {
+				MALId  int    `json:"mal_id"`
+				URL    string `json:"url"`
+				Images struct {
+					JPG struct {
+						ImageURL      string `json:"image_url"`
+						SmallImageURL string `json:"small_image_url"`
+					} `json:"jpg"`
+					Webp struct {
+						ImageURL      string `json:"image_url"`
+						SmallImageURL string `json:"small_image_url"`
+					} `json:"webp"`
+				} `json:"images"`
+				Name string `json:"name"`
+			} `json:"person"`
+			Language string `json:"language"`
+		} `json:"voice_actors"`
+	} `json:"data"`
+}
+
+type Staff struct {
+	SData []struct {
+		Person struct {
+			MALId  int    `json:"mal_id"`
+			URL    string `json:"url"`
+			Images struct {
+				JPG struct {
+					ImageURL string `json:"image_url"`
+				} `json:"jpg"`
+			} `json:"images"`
+			Name string `json:"name"`
+		} `json:"person"`
+		Positions []string `json:"positions"`
+	} `json:"data"`
+}
